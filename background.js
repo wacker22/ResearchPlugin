@@ -3,6 +3,8 @@ chrome.storage.onChanged.addListener(function(changes, areaName){
         let iconStatus = status.iconStatus;
 
         if(iconStatus) {
+
+            
             document.getElementById('iconBtn').checked = true;
         } else {
             document.getElementById('iconBtn').checked = false;
