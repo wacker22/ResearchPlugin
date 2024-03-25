@@ -4,7 +4,7 @@ chrome.storage.onChanged.addListener(function(changes, areaName){
 
         if(iconStatus) {
 
-            
+            // comment
             document.getElementById('iconBtn').checked = true;
         } else {
             document.getElementById('iconBtn').checked = false;
