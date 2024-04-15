@@ -52,6 +52,7 @@ function checkURL() {
     window.location.href.indexOf('quick_pull') === NOT_FOUND
   ) {
     addReviewPullRequestTips();
+    // 
   }
   // if the user is opening a pull request
   else if (document.getElementsByClassName('h-card').length !== 0) {
@@ -446,6 +447,104 @@ function addReviewPullRequestTips() {
   $(closePullRequestIcon.toolTipElement).insertBefore(closePullRequestIcon.gitHubElement);
 
   closePullRequestIcon.toolTipElement.style.marginRight = '20px';
+
+  const reviewerText =
+    "Assigned reviewers will recieve an email asking for a review. You'll be notified when they finish.";
+
+  const reviewerClass = '.hx_rsm';
+  
+  const reviewerIcon = new ToolTipIcon(
+    'H4',
+    'helpIcon',
+    reviewerText,
+    reviewerClass,
+
+  );
+
+  reviewerIcon.createIcon();
+
+  $(reviewerIcon.toolTipElement).insertBefore(document.getElementById("reviewers-select-menu"));
+
+  const assigneesText =
+    "Use this when you want to assign someone to take care of the pull request.";
+
+  const assigneesClass = '.hx_rsm';
+  
+  const assigneeIcon = new ToolTipIcon(
+    'H4',
+    'helpIcon',
+    assigneesText,
+    assigneesClass,
+  );
+
+  assigneeIcon.createIcon();
+
+  $(assigneeIcon.toolTipElement).insertBefore(document.getElementById("assignees-select-menu"));
+
+  const labelsText =
+    "Labels allow you to filter pull requests and stay organized if you have a lot of pull requests.";
+
+  const labelsClass = '.hx_rsm';
+  
+  const labelsIcon = new ToolTipIcon(
+    'H4',
+    'helpIcon',
+    labelsText,
+    labelsClass,
+  );
+
+  labelsIcon.createIcon();
+
+  $(labelsIcon.toolTipElement).insertBefore(document.getElementById("labels-select-menu"));
+
+  const projectsText =
+    "Associate this pull request with a github project. This helps the project track development.";
+
+  const projectsClass = '.hx_rsm';
+  
+  const projectsIcon = new ToolTipIcon(
+    'H4',
+    'helpIcon',
+    projectsText,
+    projectsClass,
+  );
+
+  projectsIcon.createIcon();
+
+  $(projectsIcon.toolTipElement).insertBefore(document.getElementById("projects-select-menu"));
+
+  const milestoneText =
+    "Repository milestones help track progress towards goals. Use this if this pull request contributes to a goal";
+
+  const milestoneClass = '.hx_rsm';
+  
+  const milestoneIcon = new ToolTipIcon(
+    'H4',
+    'helpIcon',
+    milestoneText,
+    milestoneClass,
+  );
+
+  milestoneIcon.createIcon();
+
+  $(milestoneIcon.toolTipElement).insertBefore(document.getElementById("milestone-select-menu"));
+
+  const developmentText =
+    "Use this to associate this pull request with issues. This helps to specify what the pull request accomplishes";
+
+  const developmentClass = '.hx_rsm';
+  
+  const developmentIcon = new ToolTipIcon(
+    'H4',
+    'helpIcon',
+    developmentText,
+    developmentClass,
+  );
+
+  developmentIcon.createIcon();
+
+  $(developmentIcon.toolTipElement).insertBefore(document.getElementById("reference-select-menu"));
+  
 
   /*
   var submitButtons = document.getElementsByClassName('d-flex flex-justify-end')[0];
