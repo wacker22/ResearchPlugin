@@ -49,6 +49,7 @@ function checkURL() {
     addProposeChangesToolTips();
   } else if (
     window.location.href.indexOf('pull') !== NOT_FOUND &&
+    window.location.href.indexOf('pulls') === NOT_FOUND &&
     window.location.href.indexOf('quick_pull') === NOT_FOUND
   ) {
     addReviewPullRequestTips();
@@ -73,7 +74,23 @@ function checkURL() {
   }
 }
 
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse)
+  {
+    if(request.message === 'reload')
+    {
+      
+        console.log("Reloading...");
+        location.reload();
+      
+    }
+  }
+);
+
 checkURL();
+
+
+
 
 /**
  * Function name: checkIsEditingForkedFile
