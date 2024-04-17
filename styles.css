@@ -83,6 +83,16 @@
 }
 
 /** Override GitHub styles **/
+:root[data-color-mode="dark"] {
+  --text-color: #000;
+  --bg-color: #fff;
+}
+
+:root[data-color-mode="light"] {
+  --text-color: #fff;
+  --bg-color: #000;
+}
+
 .commit-form .input-block {
   width: 60% !important;
   display: inline-block !important;
@@ -107,8 +117,8 @@
 .helpIcon .helpIconText {
   visibility: hidden;
   width: 200px;
-  background-color: black;
-  color: #fff;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   text-align: center;
   border-radius: 6px;
   padding: 5px;
@@ -143,7 +153,7 @@
 }
 
 .helpIconCircle {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(130, 130, 130, 0.5);
   padding: 5px 12px;
   border-radius: 50px;
   font-size: 20px;
