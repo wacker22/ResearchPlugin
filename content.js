@@ -7,6 +7,7 @@ class ToolTipIcon {
     this.toolTipText = toolTipText;
     this.gitHubElement = gitHubElement;
   }
+  
 
   createIcon() {
     const toolTipContainer = document.createElement('div');
@@ -19,6 +20,7 @@ class ToolTipIcon {
     const toolTip = document.createElement('span');
     toolTip.className = 'helpIconText';
     toolTip.innerHTML = this.toolTipText;
+    
 
     toolTipContainer.appendChild(circleIcon);
     toolTipContainer.appendChild(toolTip);
@@ -304,6 +306,7 @@ function addProposeChangesToolTips() {
     'placeholder',
     'You can add a more detailed description here if needed.'
   );
+  document.getElementsByClassName("CommentBox-placeholder")[0].innerHTML = ""
 
   try {
     var branchName = document.getElementsByClassName('branch-name')[0].innerText;
