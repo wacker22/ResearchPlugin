@@ -15,15 +15,25 @@ class ToolTipIcon {
     const circleIcon = document.createElement('span');
     circleIcon.className = 'helpIconCircle';
     circleIcon.innerHTML = '?';
+    
 
     const toolTip = document.createElement('span');
     toolTip.className = 'helpIconText';
     toolTip.innerHTML = this.toolTipText;
+    toolTip.style.visibility = "hidden";
 
     toolTipContainer.appendChild(circleIcon);
     toolTipContainer.appendChild(toolTip);
 
     this.toolTipElement = toolTipContainer;
+    circleIcon.onclick = function(){
+      if (toolTip.style.visibility == "hidden"){
+        toolTip.style.visibility = "visible"
+      }
+      else{
+        toolTip.style.visibility = "hidden"
+      }
+    };
   }
 }
 
@@ -33,46 +43,55 @@ class ToolTipIcon {
  * to display
  */
 function checkURL() {
-  // check if the user wants to edit a file that they are not an owner of
-  if (checkIsEditingForkedFile()) {
-    addForkToolTips();
+// check if the user wants to edit a file that they are not an owner of
+if (checkIsEditingForkedFile()) {
+  addForkToolTips();
+  console.log("addForkToolTips")
+}
+// if the user is editing a markdown file
+else if (
+  window.location.href.indexOf('.md') !== NOT_FOUND &&
+  window.location.href.indexOf('edit') !== NOT_FOUND
+) {
+  addReadMeToolTips();
+  console.log("addReadMeToolTips();")
+  
   }
-  // if the user is editing a markdown file
-  else if (
-    window.location.href.indexOf('.md') !== NOT_FOUND &&
-    window.location.href.indexOf('edit') !== NOT_FOUND
-  ) {
-    addReadMeToolTips();
-  }
-  // if the user is reviewing a pull request
-  else if (window.location.href.indexOf('compare') !== NOT_FOUND) {
-    addProposeChangesToolTips();
-  } else if (
-    window.location.href.indexOf('pull') !== NOT_FOUND &&
-    window.location.href.indexOf('pulls') === NOT_FOUND &&
-    window.location.href.indexOf('quick_pull') === NOT_FOUND
-  ) {
-    addReviewPullRequestTips();
-    // 
-  }
-  // if the user is opening a pull request
-  else if (document.getElementsByClassName('h-card').length !== 0) {
-    createProfileCard();
-  }
-  // if the user is creating a new issue
-  else if (
-    window.location.href.indexOf('issues') !== NOT_FOUND &&
-    window.location.href.indexOf('new') !== NOT_FOUND
-  ) {
-    addReportIssueTips();
-  } else if (
-    window.location.href.indexOf('issues') !== NOT_FOUND &&
-    window.location.href.indexOf('new') === NOT_FOUND
-  ) {
-    addReviewIssueTips();
-  } else {
-    // do nothing
-  }
+
+// if the user is reviewing a pull request
+else if (window.location.href.indexOf('compare') !== NOT_FOUND) {
+  console.log("addProposeChangesToolTips")
+  addProposeChangesToolTips();
+} else if (
+  window.location.href.indexOf('pull') !== NOT_FOUND &&
+  window.location.href.indexOf('quick_pull') === NOT_FOUND
+) {
+  addReviewPullRequestTips();
+  console.log("addReviewPullRequestTips")
+  // 
+}
+// if the user is opening a pull request
+else if (document.getElementsByClassName('h-card').length !== 0) {
+  console.log("createProfileCard")
+  createProfileCard();
+}
+// if the user is creating a new issue
+else if (
+  window.location.href.indexOf('issues') !== NOT_FOUND &&
+  window.location.href.indexOf('new') !== NOT_FOUND
+) {
+  console.log("addReportIssueTips")
+  addReportIssueTips();
+} else if (
+  window.location.href.indexOf('issues') !== NOT_FOUND &&
+  window.location.href.indexOf('new') === NOT_FOUND &&
+  document.getElementsByClassName('subnav-search').length == 0
+) {
+  console.log("addReviewIssueTips")
+  addReviewIssueTips();
+} else {
+  // do nothing
+}
 }
 
 chrome.runtime.onMessage.addListener(
@@ -203,7 +222,18 @@ function createSuccessRibbon() {
  */
 function addReadMeToolTips() {
   const steps = ['Edit File', 'Confirm Pull Request', 'Pull Request Opened'];
+  // Get the parent container (div) element
+  var container = document.getElementsByClassName("hlUAHL")[0];
 
+  // Create the child element you want to insert
+  var newChild = document.createElement("span"); // Example child element (can be any element)
+  newChild.className = "js-blob-form"
+
+  // Get the first child element (reference element)
+  var firstChild = container.firstChild; // Assuming you want to insert before the first child
+
+  // Insert the new child element before the reference element
+  container.insertBefore(newChild, firstChild);
   // progress bar above editor
   addProgressBar(1, 3, '.js-blob-form', steps);
 
@@ -211,12 +241,12 @@ function addReadMeToolTips() {
   const fileNameChangeText =
     'This is the file name, changing it will create a new file with the new name';
 
-  const breadCrumbDiv = '.d-md-inline-block';
+  const breadCrumbDiv = '.js-blob-form';
 
   const fileNameChangeIcon = new ToolTipIcon('H4', 'helpIcon', fileNameChangeText, breadCrumbDiv);
 
   fileNameChangeIcon.createIcon();
-
+  fileNameChangeIcon.toolTipElement.style.paddingLeft = "125px";
   $(fileNameChangeIcon.toolTipElement).insertAfter(fileNameChangeIcon.gitHubElement);
 
   // banner above commit message input
@@ -440,13 +470,14 @@ function addReviewPullRequestTips() {
     'H4',
     'helpIcon',
     branchContainerText,
-    '.js-clipboard-copy'
+    '.State'
   );
 
   pullRequestStatusIcon.createIcon();
 
-  $(pullRequestStatusIcon.toolTipElement).insertAfter(pullRequestStatusIcon.gitHubElement);
-
+  if (document.getElementsByClassName("State--open")[0].length != 0){
+    $(pullRequestStatusIcon.toolTipElement).insertBefore(pullRequestStatusIcon.gitHubElement);
+  }
   const requestButtonsText =
     'This will close the pull request meaning people cannot view this! Do not click close unless the request was solved.';
 
