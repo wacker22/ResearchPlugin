@@ -1,11 +1,12 @@
 const NOT_FOUND = -1;
 
 class ToolTipIcon {
-  constructor(toolTipElement, toolTipClass, toolTipText, gitHubElement) {
+  constructor(toolTipElement, toolTipClass, toolTipText, gitHubElement, docsLink = "https://docs.github.com/en") {
     this.toolTipElement = toolTipElement;
     this.toolTipClass = toolTipClass;
     this.toolTipText = toolTipText;
     this.gitHubElement = gitHubElement;
+    this.docsLink = docsLink;
   }
 
   createIcon() {
@@ -21,6 +22,12 @@ class ToolTipIcon {
     toolTip.className = 'helpIconText';
     toolTip.innerHTML = this.toolTipText;
     toolTip.style.visibility = "hidden";
+    var link = document.createElement('a')
+    link.href = this.docsLink
+    link.target = "_blank"
+    link.innerHTML = "Learn More"
+    toolTip.append(document.createElement('br'));
+    toolTip.append(link);
 
     toolTipContainer.appendChild(circleIcon);
     toolTipContainer.appendChild(toolTip);
@@ -33,6 +40,9 @@ class ToolTipIcon {
       else{
         toolTip.style.visibility = "hidden"
       }
+    };
+    link.onclick = function () {
+      toolTip.style.visibility = "hidden"
     };
   }
 }
@@ -243,7 +253,7 @@ function addReadMeToolTips() {
 
   const breadCrumbDiv = '.js-blob-form';
 
-  const fileNameChangeIcon = new ToolTipIcon('H4', 'helpIcon', fileNameChangeText, breadCrumbDiv);
+  const fileNameChangeIcon = new ToolTipIcon('H4', 'helpIcon', fileNameChangeText, breadCrumbDiv, "https://docs.github.com/en/repositories/working-with-files/managing-files/renaming-a-file#renaming-a-file-on-github");
 
   fileNameChangeIcon.createIcon();
   fileNameChangeIcon.toolTipElement.style.paddingLeft = "125px";
@@ -264,7 +274,8 @@ function addReadMeToolTips() {
     'H4',
     'helpIcon',
     commitTitleText,
-    '#commit-summary-input'
+    '#commit-summary-input',
+    "https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/about-commits#about-commits"
   );
 
   commitMessageIcon.createIcon();
@@ -285,7 +296,8 @@ function addReadMeToolTips() {
     'H4',
     'helpIcon',
     descriptionText,
-    '#commit-description-textarea'
+    '#commit-description-textarea',
+    "https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/about-commits#about-commits"
   );
 
   extendedDescIcon.createIcon();
@@ -299,7 +311,8 @@ function addReadMeToolTips() {
     'H4',
     'helpIcon',
     commitChangesDirectlyText,
-    '#submit-file'
+    '#submit-file',
+    "https://docs.github.com/en/desktop/making-changes-in-a-branch/pushing-changes-to-github-from-github-desktop#about-pushing-changes-to-github"
   );
 
   submitChangesIcon.createIcon();
@@ -328,7 +341,7 @@ $('input[name="commit-choice"]').click(() => {
     onDirectPull = true;
   }
 
-  const submitChangesIcon = new ToolTipIcon('H4', 'helpIcon', iconText, '#submit-file');
+  const submitChangesIcon = new ToolTipIcon('H4', 'helpIcon', iconText, '#submit-file',"https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/merging-a-pull-request#merging-a-pull-request");
 
   submitChangesIcon.createIcon();
 
@@ -370,8 +383,8 @@ function addProposeChangesToolTips() {
 
   $('.gh-header-meta').text(newHeaderText);
 
-  let pullRequestTitle = document.getElementsByClassName('gh-header-title')[1];
-  pullRequestTitle.innerHTML = 'Create pull request';
+  // let pullRequestTitle = document.getElementsByClassName('gh-header-title')[1];
+  // pullRequestTitle.innerHTML = 'Create pull request';
 
   const branchContainerText =
     'This represents the origin and destination of your changes if you are not sure, leave it how it is, this is common for small changes.';
@@ -385,7 +398,8 @@ function addProposeChangesToolTips() {
     'H4',
     'helpIcon',
     branchContainerText,
-    '.js-range-editor'
+    '.js-range-editor',
+    "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request#creating-the-pull-request"
   );
 
   currentBranchIcon.createIcon();
@@ -407,7 +421,8 @@ function addProposeChangesToolTips() {
     'H4',
     'helpIcon',
     confirmPullRequestText,
-    submitButtonClass
+    submitButtonClass,
+    "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request#creating-the-pull-request"
   );
 
   createPullRequestBtn.createIcon();
@@ -425,7 +440,7 @@ function addProposeChangesToolTips() {
   numbersSummaryContainer.style.display = 'inline-block';
 
   // icon above summary of changes and commits
-  const requestSummaryIcon = new ToolTipIcon('H4', 'helpIcon', summaryText, summaryClass);
+  const requestSummaryIcon = new ToolTipIcon('H4', 'helpIcon', summaryText, summaryClass, "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/viewing-a-pull-request-review");
 
   requestSummaryIcon.createIcon();
 
@@ -439,7 +454,7 @@ function addProposeChangesToolTips() {
     'This shows the changes between the orginal file and your version. Green(+) represents lines added. Red(-) represents removed lines';
 
   // icon above container for changes in current pull request
-  const comparisonIcon = new ToolTipIcon('H4', 'helpIcon', changesText, comparisonClass);
+  const comparisonIcon = new ToolTipIcon('H4', 'helpIcon', changesText, comparisonClass, "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request#starting-a-review");
 
   comparisonIcon.createIcon();
 
@@ -470,7 +485,8 @@ function addReviewPullRequestTips() {
     'H4',
     'helpIcon',
     branchContainerText,
-    '.State'
+    '.State',
+    "https://docs.github.com/en/pull-requests"
   );
 
   pullRequestStatusIcon.createIcon();
@@ -487,7 +503,8 @@ function addReviewPullRequestTips() {
     'H4',
     'helpIcon',
     requestButtonsText,
-    requestButtonsClass
+    requestButtonsClass,
+    "https://docs.github.com/en/issues/tracking-your-work-with-issues/closing-an-issue"
   );
 
   closePullRequestIcon.createIcon();
@@ -506,6 +523,7 @@ function addReviewPullRequestTips() {
     'helpIcon',
     reviewerText,
     reviewerClass,
+    "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/requesting-a-pull-request-review"
 
   );
 
@@ -523,6 +541,7 @@ function addReviewPullRequestTips() {
     'helpIcon',
     assigneesText,
     assigneesClass,
+    "https://docs.github.com/en/issues/tracking-your-work-with-issues/assigning-issues-and-pull-requests-to-other-github-users#about-issue-and-pull-request-assignees"
   );
 
   assigneeIcon.createIcon();
@@ -539,6 +558,7 @@ function addReviewPullRequestTips() {
     'helpIcon',
     labelsText,
     labelsClass,
+    "https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/managing-labels#about-labels"
   );
 
   labelsIcon.createIcon();
@@ -555,6 +575,7 @@ function addReviewPullRequestTips() {
     'helpIcon',
     projectsText,
     projectsClass,
+    "https://docs.github.com/en/issues/organizing-your-work-with-project-boards/tracking-work-with-project-boards/adding-issues-and-pull-requests-to-a-project-board"
   );
 
   projectsIcon.createIcon();
@@ -571,6 +592,7 @@ function addReviewPullRequestTips() {
     'helpIcon',
     milestoneText,
     milestoneClass,
+    "https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/about-milestones"
   );
 
   milestoneIcon.createIcon();
@@ -587,6 +609,7 @@ function addReviewPullRequestTips() {
     'helpIcon',
     developmentText,
     developmentClass,
+    "https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue"
   );
 
   developmentIcon.createIcon();
@@ -628,7 +651,7 @@ function addReportIssueTips() {
 
   const submitButtonClass = '.flex-justify-end button:eq(0)';
 
-  const submitButtonIcon = new ToolTipIcon('H4', 'helpIcon', submitButtonText, submitButtonClass);
+  const submitButtonIcon = new ToolTipIcon('H4', 'helpIcon', submitButtonText, submitButtonClass, "https://docs.github.com/en/issues/tracking-your-work-with-issues/quickstart#submitting-your-issue");
 
   submitButtonIcon.createIcon();
 
@@ -655,7 +678,7 @@ function addReviewIssueTips() {
 
   const submitButtonClass = '.flex-justify-end button:eq(0)';
 
-  const submitButtonIcon = new ToolTipIcon('H4', 'helpIcon', closeIssueIconText, submitButtonClass);
+  const submitButtonIcon = new ToolTipIcon('H4', 'helpIcon', closeIssueIconText, submitButtonClass, "https://docs.github.com/en/issues/tracking-your-work-with-issues/closing-an-issue");
 
   submitButtonIcon.createIcon();
 
