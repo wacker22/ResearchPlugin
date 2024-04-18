@@ -83,6 +83,18 @@
 }
 
 /** Override GitHub styles **/
+:root[data-color-mode="dark"] {
+  --box-text-color: rgba(0, 0, 0, 1);
+  --bg-color: rgba(255, 255, 255, 1);
+  --icon-text-color: rgba(255, 255, 255, 1);
+}
+
+:root[data-color-mode="light"] {
+  --box-text-color: rgba(255, 255, 255, 1);
+  --bg-color: rgba(0, 0, 0, 1);
+  --icon-text-color: rgba(0, 0, 0, 1);
+}
+
 .commit-form .input-block {
   width: 60% !important;
   display: inline-block !important;
@@ -107,8 +119,8 @@
 .helpIcon .helpIconText {
   visibility: hidden;
   width: 200px;
-  background-color: black;
-  color: #fff;
+  background-color: var(--bg-color);
+  color: var(--box-text-color);
   text-align: center;
   border-radius: 6px;
   padding: 5px;
@@ -119,6 +131,12 @@
   bottom: 150%;
   left: 50%;
   margin-left: -60px;
+}
+
+.helpIcon .helpIconText a{
+  color: var(--box-text-color);
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 /* .helpIcon:hover .helpIconText {
@@ -143,12 +161,12 @@
 }
 
 .helpIconCircle {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(130, 130, 130, 0.5);
   padding: 5px 12px;
   border-radius: 50px;
   font-size: 20px;
   text-decoration: none;
-  color: white;
+  color: var(--icon-text-color);
 }
 
 /** Success Message Styles **/
