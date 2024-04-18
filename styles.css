@@ -131,13 +131,13 @@
   margin-left: -60px;
 }
 
-.helpIcon:hover .helpIconText {
+/* .helpIcon:hover .helpIconText {
   visibility: visible;
 }
 
 .helpIcon:hover .removeText {
   visibility: hidden !important;
-}
+} */
 
 .helpIconText:before {
   content: '';
